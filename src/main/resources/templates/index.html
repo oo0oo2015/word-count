@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/header}">
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>管理系统</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <script src="../static/js/jquery-3.4.1.js"></script>
+    <script src="../static/js/popper.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+    <!--/*@thymesVar id="user" type="wang.oo0oo.wordcount.pojo.User"*/-->
+    <form action="main.html" th:action="@{/login}" th:method="post" th:object="${user}">
+        <table>
+            <tr>
+                <td>用户名：</td>
+                <td>
+                    <label>
+                        <input type="text" class="form-control" name="userName" th:value="*{userName}">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td>
+                    <label>
+                        <input type="password" class="form-control" name="password" th:value="*{password}">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><span class="col-sm-4" style="color: red;" th:text="${msg}">用户名或密码错误</span></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" class="btn btn-primary">登录</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

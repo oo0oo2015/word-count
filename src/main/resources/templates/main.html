@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/header}">
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>管理系统</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <script src="../static/js/jquery-3.4.1.js"></script>
+    <script src="../static/js/popper.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+</head>
+<body>
+登录成功！欢迎使用本系统。
+<div class="container">
+    <div class="col-sm-7">
+        <input id="cover" type="file" class="form-control">
+        <input type="hidden" value="" id="coverPath" name="cover" th:value="*{cover}">
+    </div>
+    <div class="col-sm-3 ">
+        <input type="button" class="btn btn-primary form-control" value="上传并统计" id="uploadButton"/>
+        <p>提示：点击“上传并统计”按钮后请等待任务结束，请勿重复点击！</p>
+    </div>
+    <span class="col-sm-4" id="upload-status" style="color: green;"></span>
+    <span class="col-sm-4" id="task-status" style="color: green;"></span>
+    <button type="button" class="btn btn-info" value="获取结果" id="getResultButton">获取结果</button>
+    <div id="showResult"></div>
+    <!--    <div class="form-group row">-->
+    <!--        <div class="col-sm-2"></div>-->
+    <!--        <div class="col-sm-10">-->
+    <!--            <img id="coverImg" th:src="*{cover}" height="200px"/>-->
+    <!--        </div>-->
+    <!--    </div>-->
+</div>
+<script>
+    $("#uploadButton").click(function() {
+        var formData = new FormData();
+        var cover = $("#cover")[0].files[0];
+        formData.append("cover", cover);
+        $.ajax({
+            url:'[[ @{/book/upload} ]]',
+            data: formData,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            // success: function(obj){
+            //     $("#coverPath").val(obj);
+            //     $("#status").text("上传成功！")
+            //     $("#coverImg").attr("src", obj);
+            // }
+            success: function(obj){
+                $("#upload-status").text("文件上传成功！");
+                $("#task-status").text(obj);
+            }
+        });
+    });
+
+    $("#getResultButton").click(function () {
+        $.ajax({
+            url: '[[ @{/book/get_result} ]]',
+            type: "get",
+            async: true,
+            dataType: "json",
+            success:function(data) {
+                var inf = "<table class='table'>";
+                inf += "<tr><th>单词</th><th>出现次数</th></tr>";
+                /*<![CDATA[*/
+                $.each(data, function (k, v) {
+                    if (k === "data") {
+                        $.each(v, function (no, res) {
+                            $.each(res, function (word, count) {
+                                inf += "<tr><td>" + word + "</td><td>" + count + "</td></tr>";
+                            });
+                        });
+                    }
+                });
+                inf += "</table>";
+                /*]]>*/
+                $("#showResult").html(inf);
+            }
+        })
+    })
+</script>
+</body>
+</html>
