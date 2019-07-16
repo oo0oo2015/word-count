@@ -7,7 +7,7 @@
 二、在Windows环境下通过IDEA远程连接Linux里的Hadoop并运行MapReduce程序
 1、下载winutils.exe和hadoop.dll
 https://github.com/steveloughran/winutils
-2、将hadoop.dll放到E:\windows\System32里
+2、将hadoop.dll放到C:\windows\System32里
 3、将hadoop-2.7.7.tar.gz（二进制包）解压到Windows的E:\里
 4、将winutils.exe放到E:\hadoop-2.7.7\bin里
 5、将Linux里配置好的hadoop的配置文件目录里的log4j.properties和core-site.xml复制到项目根目录（IDEA的maven项目的话是放到resources目录里，下同）
