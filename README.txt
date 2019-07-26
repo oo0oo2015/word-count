@@ -13,7 +13,6 @@ https://github.com/steveloughran/winutils
 5、将Linux里配置好的hadoop的配置文件目录里的log4j.properties和core-site.xml复制到项目根目录（IDEA的maven项目的话是放到resources目录里，下同）
 6、往HDFS里/user/joe/wordcount/input传要统计的文件（不要创建output文件夹）
 7、执行程序
-8、下次执行前要手动删除output目录【待完善】
 
 
 三、中文分词能力（使用IKAnalyzer分词器）
